@@ -1,14 +1,20 @@
 <div class="container">
   <div class="row">
     <div class="col-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <input type="text"
+      class="form-controls"
+      [(ngModel)]="filteredStatus"><div class="mb-1 mt-3">
+      <button class="btn btn-dark" (click)="onAddServer()">Add Service</button></div>
+        <hr>
+      <h1 class="mb-3">App Status : {{appStatus|async}}</h1>
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers"
+          *ngFor="let server of servers | filter:filteredStatus:'status'"
           [ngClass]="getStatusClasses(server)">
-          <strong>{{ server.name }}</strong> |
-          {{ server.instanceType }} |
-          {{ server.started }}
+          <strong>{{ server.name | shorten: 10 }}</strong> |
+          {{ server.instanceType | uppercase }} |
+          {{ server.started | date: 'fullData' | uppercase }}
           <span
             class="badge rounded-pill
             float-end
